@@ -28,10 +28,11 @@ class ListProductService implements ListProductServiceInterface {
 
 	/**
 	 *
-	 * @param ListProductServiceInterface $service        	
-	 * @param PropertyServiceInterface $propertyService        	
+	 * @param ListProductServiceInterface $service
+	 * @param PropertyServiceInterface    $propertyService
+	 * @param LegacyStructConverter       $legacyStructConverter
 	 */
-	function __construct(ListProductServiceInterface $service, PropertyServiceInterface $propertyService, LegacyStructConverter $legacyStructConverter) {
+	public function __construct(ListProductServiceInterface $service, PropertyServiceInterface $propertyService, LegacyStructConverter $legacyStructConverter) {
 		$this->service = $service;
 		$this->propertyService = $propertyService;
         $this->legacyStructConverter = $legacyStructConverter;
