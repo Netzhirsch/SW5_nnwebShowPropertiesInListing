@@ -43,11 +43,14 @@ class ListProductService implements ListProductServiceInterface {
 	 */
 	public function getList(array $numbers, Struct\ProductContextInterface $context) {
 		$products = $this->service->getList($numbers, $context);
-		$propertieSets = $this->propertyService->getList($products, $context);
-		$legacyProps = $this->convertPropertyStructs($propertieSets);
-		
-		/**@var $product Struct\ListProduct*/
-		foreach ($products as $product) {
+        $propertySets = $this->propertyService->getList($products, $context);
+
+        $legacyProps = [];
+        foreach ($propertySets as $ordernumber => $propertySet) {
+            $legacyProps[$ordernumber] = $this->legacyStructConverter->convertPropertySetStruct($propertySet);
+        }
+
+        foreach ($products as $product) {
 			$productId = $product->getNumber();
 			if (!isset($legacyProps[$productId])) {
 				continue;
@@ -61,15 +64,6 @@ class ListProductService implements ListProductServiceInterface {
 		}
 
 		return $products;
-	}
-
-	private function convertPropertyStructs($propertySets) {
-		// convert property set Structs to legacy Array format
-		$legacyProps = [];
-		foreach ($propertySets as $ordernumber => $propertySet) {
-			$legacyProps[$ordernumber] = $this->legacyStructConverter->convertPropertySetStruct($propertySet);
-		}
-		return $legacyProps;
 	}
 
 	/**

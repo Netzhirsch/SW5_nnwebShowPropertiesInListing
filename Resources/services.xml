@@ -1,0 +1,17 @@
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <defaults public="true"/>
+
+        <service id="nnweb_show_properties_in_listing.list_product_service_decorator"
+         class="nnwebShowPropertiesInListing\ListProductService"
+         decorates="shopware_storefront.list_product_service"
+         public="false">
+            <argument type="service" id="nnweb_show_properties_in_listing.list_product_service_decorator.inner"/>
+            <argument type="service" id="shopware_storefront.property_service"/>
+            <argument type="service" id="legacy_struct_converter"/>
+        </service>
+    </services>
+</container>
